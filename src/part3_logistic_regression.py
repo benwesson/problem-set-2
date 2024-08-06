@@ -19,7 +19,13 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.model_selection import StratifiedKFold as KFold_strat
 from sklearn.linear_model import LogisticRegression as lr
 
-
-# Your code here
-
-
+def logFunction():
+    # Your code here
+    df_arrests = pd.read_csv("data/df_arrests.csv")
+    df_arrests_train,df_arrests_test = train_test_split(df_arrests, test_size = 0.3,shuffle = True)
+    features = ["pred_universe","num_fel_arrests_last_year"]
+    param_grid = {"C":[0.1,1,2]}
+    lr_model = lr()
+    myFolds = KFold_strat(n_splits=5)
+    gs_cv = GridSearchCV(estimator =lr_model,param_grid=param_grid,cv=myFolds)
+    print(gs_cv)

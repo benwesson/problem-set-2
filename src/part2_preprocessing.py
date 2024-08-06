@@ -17,10 +17,34 @@ PART 2: Pre-processing
 '''
 
 # import the necessary packages
+import pandas as pd
+import numpy as np
+from datetime import timedelta
+ # Your code here
+def part_2_function():
+   
+    #Read CSVs
+    pred_universe_raw = pd.read_csv("data/pred_universe_raw.csv")
+    arrest_events_raw = pd.read_csv("data/arrest_events_raw.csv")
+
+    #Join dataframes
+    df_arrests = pd.merge(pred_universe_raw,arrest_events_raw,how = "outer",on = ["person_id"])
+
+    #convert string dates to datetime dates
+    df_arrests["arrest_date_event"] = pd.to_datetime(df_arrests["arrest_date_event"])
+    df_arrests["arrest_date_univ"] = pd.to_datetime(df_arrests["arrest_date_univ"])
+    
+    #Create column y
+    df_arrests["y"] = np.where(df_arrests["arrest_date_univ"] < (df_arrests["arrest_date_event"] + timedelta(days=365)),1,0)
+    df_arrests.to_csv("data/df_arrests.csv")
 
 
+    #print(df_arrests)
+    x = df_arrests["y"].value_counts()
+    
+    print("Percentage of people arrested for crime within a year",x[1]/6519)
+    y = df_arrests["charge_degree"].value_counts()
+    print("The amount of current charges that are felonies are",y["felony"])
+    return df_arrests
 
-# Your code here
-
-
-
+print(part_2_function())
