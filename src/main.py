@@ -22,7 +22,7 @@ def main():
     # PART 3: Call functions/instanciate objects from logistic_regression
     print(part3_logistic_regression.logFunction())
     # PART 4: Call functions/instanciate objects from decision_tree
-
+    #This is far as I got. Just turning in what I have. Will focus on  completing problem set 3
     # PART 5: Call functions/instanciate objects from calibration_plot
 
 
